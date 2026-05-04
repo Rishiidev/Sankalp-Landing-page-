@@ -4,11 +4,45 @@ import createGlobe from "cobe";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 
-export function Globe() {
+export function Globe({ isUserLightActive = false }: { isUserLightActive?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [toastMessage, setToastMessage] = useState<{ id: number, text: string } | null>(null);
+  const isUserLightActiveRef = useRef(isUserLightActive);
+
+  useEffect(() => {
+    isUserLightActiveRef.current = isUserLightActive;
+  }, [isUserLightActive]);
+
+  useEffect(() => {
+    // Toast generation
+    const cities = ["London", "Mumbai", "New York", "Singapore", "Berlin", "Dubai", "Sydney", "Toronto", "Bangalore"];
+    const vows = [21, 41, 108];
+    let timeoutId: NodeJS.Timeout;
+    
+    const showRandomToast = () => {
+      const city = cities[Math.floor(Math.random() * cities.length)];
+      const vow = vows[Math.floor(Math.random() * vows.length)];
+      setToastMessage({ id: Date.now(), text: `Someone in ${city} just started their ${vow}-day vow` });
+      
+      timeoutId = setTimeout(() => {
+        setToastMessage(null);
+      }, 4000); // hide after 4s
+    };
+
+    const intervalId = setInterval(() => {
+      if (Math.random() > 0.3) {
+        showRandomToast();
+      }
+    }, 7000);
+
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     let phi = 0;
@@ -21,7 +55,7 @@ export function Globe() {
 
     if (!canvasRef.current) return;
 
-    const baseMarkers: { location: [number, number]; size: number }[] = [
+      const baseMarkers: { location: [number, number]; size: number }[] = [
       { location: [28.6139, 77.2090], size: 0.15 }, // New Delhi
       { location: [40.7128, -74.0060], size: 0.08 }, // New York
       { location: [51.5074, -0.1278], size: 0.09 }, // London
@@ -52,7 +86,6 @@ export function Globe() {
       { location: [17.3850, 78.4867], size: 0.1 }, // Hyderabad
       { location: [23.0225, 72.5714], size: 0.09 }, // Ahmedabad
       { location: [26.8467, 80.9462], size: 0.08 }, // Lucknow
-      // Additional markers
       { location: [31.2304, 121.4737], size: 0.09 }, // Shanghai
       { location: [22.3193, 114.1694], size: 0.08 }, // Hong Kong
       { location: [45.4215, -75.6972], size: 0.05 }, // Ottawa
@@ -79,6 +112,26 @@ export function Globe() {
       { location: [40.4168, -3.7038], size: 0.06 }, // Madrid
       { location: [59.3293, 18.0686], size: 0.05 }, // Stockholm
       { location: [55.6761, 12.5683], size: 0.04 }, // Copenhagen
+      { location: [-22.9068, -43.1729], size: 0.06 }, // Rio de Janeiro
+      { location: [49.2827, -123.1207], size: 0.05 }, // Vancouver
+      { location: [51.0447, -114.0719], size: 0.04 }, // Calgary
+      { location: [45.5017, -73.5673], size: 0.06 }, // Montreal
+      { location: [38.9072, -77.0369], size: 0.05 }, // Washington D.C.
+      { location: [29.7604, -95.3698], size: 0.06 }, // Houston
+      { location: [41.8781, -87.6298], size: 0.07 }, // Chicago
+      { location: [32.7767, -96.7970], size: 0.06 }, // Dallas
+      { location: [25.7617, -80.1918], size: 0.05 }, // Miami
+      { location: [3.1390, 101.6869], size: 0.08 }, // Kuala Lumpur
+      { location: [13.7563, 100.5018], size: 0.09 }, // Bangkok
+      { location: [1.3521, 103.8198], size: 0.08 }, // Singapore
+      { location: [22.2855, 114.1577], size: 0.07 }, // Hong Kong Island
+      { location: [24.7136, 46.6753], size: 0.06 }, // Riyadh
+      { location: [29.3117, 47.4818], size: 0.05 }, // Kuwait City
+      { location: [25.2854, 51.5310], size: 0.06 }, // Doha
+      { location: [9.0820, 8.6753], size: 0.07 }, // Abuja
+      { location: [-1.2921, 36.8219], size: 0.06 }, // Nairobi
+      { location: [-15.7939, -47.8828], size: 0.05 }, // Brasilia
+      { location: [-33.4489, -70.6693], size: 0.06 }, // Santiago
     ];
 
     let t = 0;
@@ -94,14 +147,14 @@ export function Globe() {
       mapSamples: 32000,
       mapBrightness: 12,
       baseColor: [0.03, 0.03, 0.03], // Deep dark
-      markerColor: [255 / 255, 180 / 255, 80 / 255], // Brighter orange
-      glowColor: [255 / 255, 220 / 255, 120 / 255], // Bright halo orange/yellow
-      markers: baseMarkers,
+      markerColor: [255 / 255, 210 / 255, 110 / 255], // Clearly visible bright orange-yellow
+      glowColor: [255 / 255, 150 / 255, 50 / 255], // Warm orange halo effect around the globe
+      markers: [...baseMarkers, { location: [28.6139, 77.2090], size: 0 }],
       // @ts-expect-error onRender is missing in types
       onRender: (state) => {
         // Continuous slow rotation unless dragged
         if (!pointerInteracting.current) {
-          phi += 0.001 // very slow rotation
+           phi += 0.001 // very slow rotation
         }
         state.phi = phi + pointerInteractionMovement.current;
         state.width = width * 2;
@@ -109,14 +162,19 @@ export function Globe() {
 
         t += 0.05;
         // Evaluate dynamic pulsing size and brightness
-        state.markers = baseMarkers.map((m, i) => {
-          const pulse = Math.sin(t + i * 1.2);
-          const active = pulse > 0.6;
-          return {
-            location: m.location as [number, number],
-            size: m.size + Math.max(0, pulse) * 0.04,
-          };
-        });
+        state.markers = [
+          ...baseMarkers.map((m, i) => {
+            const pulse = Math.sin(t + i * 1.2);
+            return {
+              location: m.location as [number, number],
+              size: m.size + Math.max(0, pulse) * 0.05,
+            };
+          }),
+          { 
+            location: [28.6139, 77.2090] as [number, number], 
+            size: isUserLightActiveRef.current ? 0.3 + (Math.sin(t * 3) * 0.05) : 0 
+          } // Giant user marker (e.g. India) always present but size 0 if inactive
+        ];
       }
     })
 
@@ -157,6 +215,34 @@ export function Globe() {
 
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-900 to-transparent z-10 pointer-events-none" />
       
+      {/* User's Light Beam */}
+      {isUserLightActive && (
+        <motion.div 
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "150%", opacity: [0, 1, 0] }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="absolute top-[-50%] left-1/2 -translate-x-1/2 w-1.5 bg-gradient-to-b from-white via-orange-300 to-transparent z-20 pointer-events-none shadow-[0_0_20px_#f97316]"
+        />
+      )}
+
+      {/* Live Connection Toast */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 pointer-events-none whitespace-nowrap">
+        <motion.div
+          animate={{ 
+            opacity: toastMessage ? 1 : 0, 
+            y: toastMessage ? 0 : 20, 
+            scale: toastMessage ? 1 : 0.9 
+          }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="px-4 py-2 bg-slate-800/80 backdrop-blur-md border border-orange-500/20 rounded-full shadow-[0_4px_20px_rgba(249,115,22,0.15)] flex items-center gap-2"
+        >
+          <div className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse shadow-[0_0_5px_#fb923c]" />
+          <span className="text-xs font-medium text-slate-200 tracking-wide font-sans">
+            {toastMessage ? toastMessage.text : ""}
+          </span>
+        </motion.div>
+      </div>
+
       <canvas
         ref={canvasRef}
         style={{ 

@@ -299,7 +299,7 @@ export default function LandingPage() {
                <div className="absolute inset-0 bg-gradient-to-l from-transparent to-slate-900 z-10 pointer-events-none hidden md:block" />
                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10 pointer-events-none md:hidden" />
                <div className="w-[150%] max-w-[800px] transform translate-y-12 md:translate-x-12 opacity-80">
-                 <Globe />
+                 <Globe isUserLightActive={showTicket} />
                </div>
             </div>
           </div>
