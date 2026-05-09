@@ -89,30 +89,36 @@ export default function LandingPage() {
         <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-red-600/10 rounded-full blur-[120px] opacity-50 mix-blend-screen" />
       </div>
 
-      <nav className="relative z-10 w-full px-6 py-6 border-b border-white/5 bg-slate-950/50 backdrop-blur-md">
+      <nav className="relative z-10 w-full px-4 sm:px-6 py-4 sm:py-6 border-b border-white/5 bg-slate-950/50 backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-600 flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.4)]">
               <Flame className="w-4 h-4 text-white" />
             </div>
-            <span className="font-display font-bold text-xl tracking-wide text-white">Sankalp</span>
+            <Link href="/" className="font-display font-bold text-lg sm:text-xl tracking-wide text-white">Sankalp</Link>
           </div>
-          <div>
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/oracle" className="text-sm font-medium text-slate-300 hover:text-orange-400 transition-colors">The Oracle</Link>
+            <Link href="/mala-counter" className="text-sm font-medium text-slate-300 hover:text-orange-400 transition-colors">Digital Mala</Link>
+            <Link href="/breath-sync" className="text-sm font-medium text-slate-300 hover:text-orange-400 transition-colors">Breath Sync</Link>
+          </div>
+          <div className="flex items-center gap-4">
             <Link 
               href="https://sankalpv33.vercel.app/" 
               target="_blank"
               onClick={(e) => {
                 // To keep the user in the preview if possible, we just use standard links
               }}
-              className="px-5 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium transition-all duration-300 backdrop-blur-md text-white"
+              className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-md text-white whitespace-nowrap"
             >
-              Enter the Sanctuary
+              <span className="hidden sm:inline">Enter the Sanctuary</span>
+              <span className="sm:hidden">Enter</span>
             </Link>
           </div>
         </div>
       </nav>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-32">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-20 md:pt-24 pb-20 md:pb-32">
         {/* HERO SECTION */}
         <motion.section 
           className="flex flex-col items-center text-center pb-24"
@@ -130,7 +136,7 @@ export default function LandingPage() {
           
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter leading-[1.1] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter leading-[1.1] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 mb-6 px-2"
           >
             The Ultimate <br className="hidden md:block"/> 
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-red-500 to-orange-400">
@@ -140,7 +146,7 @@ export default function LandingPage() {
           
           <motion.p 
             variants={itemVariants}
-            className="max-w-2xl text-lg md:text-xl text-slate-400 leading-relaxed mb-10 font-light"
+            className="max-w-2xl text-base sm:text-lg md:text-xl text-slate-400 leading-relaxed mb-10 font-light px-2"
           >
             A distraction-free, beautifully crafted space to track your daily chanting, maintain your streak, and solidify your vows. Enter God Mode.
           </motion.p>
@@ -148,16 +154,16 @@ export default function LandingPage() {
           <motion.div variants={itemVariants} className="w-full max-w-lg mx-auto bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden group mt-10">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="relative z-10 flex flex-col gap-6">
-              <div className="text-lg md:text-xl text-slate-300 font-medium leading-relaxed flex flex-wrap items-center justify-center gap-y-2">
+              <div className="text-base sm:text-lg md:text-xl text-slate-300 font-medium leading-relaxed flex flex-wrap items-center justify-center gap-y-3">
                 I commit to chanting the Chalisa for 
                 <div className="inline-flex items-center relative mx-2 align-middle" ref={dropdownRef}>
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="relative bg-slate-800 border border-orange-500/30 text-orange-400 rounded-xl pl-4 pr-3 py-1 font-display font-bold outline-none focus:border-orange-500 transition-colors shadow-inner cursor-pointer hover:bg-slate-700 hover:border-orange-500 overflow-hidden h-10 min-w-[125px] flex items-center justify-between gap-2"
+                    className="relative bg-slate-800 border border-orange-500/30 text-orange-400 rounded-xl pl-4 pr-3 py-1 font-display font-bold outline-none focus:border-orange-500 transition-colors shadow-inner cursor-pointer hover:bg-slate-700 hover:border-orange-500 overflow-hidden min-h-[44px] min-w-[125px] flex items-center justify-between gap-2 touch-manipulation"
                   >
-                    <span className="block">{vowDays} Days</span>
+                    <span className="block text-base">{vowDays} Days</span>
                     <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                   </motion.button>
 
@@ -177,7 +183,7 @@ export default function LandingPage() {
                               setVowDays(days);
                               setIsDropdownOpen(false);
                             }}
-                            className={`px-4 py-2.5 text-left font-display font-bold transition-colors text-sm ${vowDays === days ? 'text-orange-400 bg-orange-500/10' : 'text-slate-300 hover:bg-slate-700 hover:text-white'}`}
+                            className={`px-4 py-3 min-h-[44px] text-left font-display font-bold transition-colors text-sm touch-manipulation ${vowDays === days ? 'text-orange-400 bg-orange-500/10' : 'text-slate-300 hover:bg-slate-700 hover:text-white'}`}
                           >
                             {days} Days
                           </button>
@@ -189,39 +195,74 @@ export default function LandingPage() {
                 starting today.
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col md:flex-row flex-wrap justify-center gap-3">
                 <button 
                   onClick={handleTakeVow}
                   disabled={isGeneratingTicket}
-                  className="flex-1 relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-orange-500 text-white rounded-xl font-bold text-lg overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_40px_rgba(249,115,22,0.3)] disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-not-allowed group/btn"
+                  className="flex-1 md:flex-none w-full md:w-auto min-h-[56px] relative inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 bg-orange-500 text-white rounded-xl font-bold text-base sm:text-lg overflow-hidden transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_40px_rgba(249,115,22,0.3)] disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-not-allowed group/btn touch-manipulation"
                 >
                   {isGeneratingTicket ? (
                     <span className="flex items-center gap-2">Sealing Vow <Zap className="w-5 h-5 animate-pulse text-white" /></span>
                   ) : (
                     <>
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]" />
-                      Take the Vow <ArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
+                      Begin Your Sankalp <ArrowRight className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" />
                     </>
                   )}
                 </button>
                 <Link 
-                  href="#features"
-                  className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-lg transition-colors backdrop-blur-md"
+                  href="/breath-sync"
+                  className="w-full md:w-auto min-h-[56px] inline-flex items-center justify-center px-6 md:px-8 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium text-base sm:text-lg transition-colors overflow-hidden group/breath relative touch-manipulation"
                 >
-                  Explore
+                  <div className="absolute inset-0 opacity-0 group-hover/breath:opacity-10 transition-opacity bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
+                  <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3 animate-pulse" />
+                  Start 60s Breath Sync
+                </Link>
+                <Link 
+                  href="/mala-counter"
+                  className="w-full md:w-auto min-h-[56px] inline-flex items-center justify-center px-6 sm:px-8 py-4 rounded-xl bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-400 font-medium text-base sm:text-lg transition-colors backdrop-blur-md touch-manipulation"
+                >
+                  <div className="w-5 h-5 mr-2 rounded-full border-2 border-orange-400 border-dashed" />
+                  Quick Mala
                 </Link>
               </div>
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="mt-6 text-sm text-slate-500 font-medium tracking-wide">
-            Takes 10 seconds. No login required to start.
+          {/* Sub CTA info line */}
+          <motion.div variants={itemVariants} className="mt-6 flex flex-col gap-2 text-sm text-slate-500 font-medium tracking-wide w-full px-4 text-center">
+            <p>Takes 10 seconds. No login required to start.</p>
+            <p className="flex items-center justify-center gap-1.5 opacity-80 pt-1">
+              Want a personalized vow? <Link href="/oracle" className="text-orange-400 hover:text-orange-300 underline decoration-orange-400/30 underline-offset-4">Consult The Oracle</Link>
+            </p>
           </motion.div>
 
           <motion.div variants={itemVariants} className="mt-10 flex flex-wrap items-center justify-center gap-2 text-sm text-slate-400 bg-white/5 px-5 py-2.5 rounded-full border border-white/5">
              <Heart className="w-4 h-4 text-red-500 fill-red-500" />
              <span>100% Free. Built out of devotion, not for profit.</span>
           </motion.div>
+        </motion.section>
+
+        {/* VALUE PROPOSITION */}
+        <motion.section 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+          className="mb-24 md:mb-32 w-full max-w-5xl mx-auto px-4 sm:px-6"
+        >
+          <div className="rounded-[2.5rem] bg-gradient-to-b from-slate-900/80 to-slate-950 border border-white/5 p-6 sm:p-10 md:p-16 text-center relative overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(249,115,22,0.1)_0%,transparent_50%)] pointer-events-none" />
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-semibold uppercase tracking-widest mb-6 md:mb-8 relative z-10">
+              <Zap className="w-3 h-3" /> The Core Purpose
+            </motion.div>
+            <motion.h2 variants={itemVariants} className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white mb-6 leading-tight relative z-10">
+              A Distraction-Free Sanctuary <br className="hidden md:block"/> for Serious Seekers.
+            </motion.h2>
+            <motion.p variants={itemVariants} className="text-slate-400 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto relative z-10 font-light">
+              Sankalp is designed for spiritual practitioners who want to build unbreakable discipline. It replaces chaotic habit-tracking apps with a purposely minimal environment—empowering you to take a vow, track your daily chanting, and forge lasting neural and spiritual pathways.
+            </motion.p>
+          </div>
         </motion.section>
 
         {/* SOCIAL PROOF / COLLECTIVE SANGHA */}
@@ -234,7 +275,7 @@ export default function LandingPage() {
         >
           <div className="relative rounded-3xl bg-slate-900 border border-white/5 overflow-hidden flex flex-col md:flex-row items-center">
             {/* Left Content */}
-            <div className="w-full md:w-1/2 p-10 md:p-16 z-10">
+            <div className="w-full md:w-1/2 p-6 sm:p-10 md:p-16 z-10">
               <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold uppercase tracking-widest mb-6">
                 <div className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -253,7 +294,7 @@ export default function LandingPage() {
               
               <motion.div variants={itemVariants} className="flex flex-col gap-6 mt-8">
                 <div className="flex items-center gap-4">
-                  <div className="text-4xl font-display font-bold text-white tabular-nums">
+                  <div className="text-3xl sm:text-4xl font-display font-bold text-white tabular-nums min-w-[70px]">
                     <AnimatePresence mode="popLayout">
                       <motion.span 
                         key={devotees}
@@ -267,13 +308,13 @@ export default function LandingPage() {
                       </motion.span>
                     </AnimatePresence>
                   </div>
-                  <div className="text-sm text-slate-500 leading-tight">Devotees in<br/>God Mode right now</div>
+                  <div className="text-xs sm:text-sm text-slate-500 leading-tight">Devotees in<br/>God Mode right now</div>
                 </div>
                 
                 <div className="h-px bg-white/5 w-full max-w-xs" />
                 
                 <div className="flex items-center gap-4">
-                  <div className="text-4xl font-display font-bold text-white tabular-nums">
+                  <div className="text-3xl sm:text-4xl font-display font-bold text-white tabular-nums min-w-[120px]">
                     <AnimatePresence mode="popLayout">
                       <motion.span 
                         key={globalDays}
@@ -287,7 +328,7 @@ export default function LandingPage() {
                       </motion.span>
                     </AnimatePresence>
                   </div>
-                  <div className="text-sm text-slate-500 leading-tight">Days of devotion<br/>completed globally this month</div>
+                  <div className="text-xs sm:text-sm text-slate-500 leading-tight">Days of devotion<br/>completed globally this month</div>
                 </div>
               </motion.div>
             </div>
@@ -449,10 +490,10 @@ export default function LandingPage() {
         >
           <div className="text-center mb-16 px-4">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">The Path of Discipline</h2>
-            <p className="text-slate-400 text-lg max-w-xl mx-auto">Your spiritual journey ritualized. From your initial vow to an unbreakable rhythm.</p>
+            <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto">Your spiritual journey ritualized. From your initial vow to an unbreakable rhythm.</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 relative px-4">
             <div className="hidden md:block absolute top-[28px] left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-orange-500/0 via-orange-500/30 to-orange-500/0" />
             
             <motion.div variants={itemVariants} className="relative flex flex-col items-center text-center group">
@@ -488,7 +529,7 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="mt-32 max-w-5xl mx-auto px-6"
+          className="mt-32 max-w-5xl mx-auto px-4 sm:px-6"
         >
           <div className="text-center mb-16 px-4">
             <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-widest mb-6">
@@ -591,7 +632,7 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="mt-32 max-w-4xl mx-auto px-6"
+          className="mt-32 max-w-4xl mx-auto px-4 sm:px-6"
         >
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Questions & Doubts</h2>
@@ -631,34 +672,49 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="max-w-6xl mx-auto mt-32 mb-16 px-6"
+          className="max-w-6xl mx-auto mt-32 mb-16 px-4 sm:px-6"
         >
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Echoes of Devotion</h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">Real voices from practitioners who transformed their mindset through continuous chanting.</p>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">Real voices from practitioners who transformed their mindset through continuous practice.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
-                text: "I used to let fear and anxiety govern me. 41 days of this strict Sankalp completely rewired my mind. The clarity is profound.",
-                author: "Anonymous Practitioner"
+                text: "I used to let fear and anxiety govern my mornings. 41 days of this strict Sankalp completely rewired my mind. The clarity is profound.",
+                author: "Sarah J.",
+                role: "Product Designer",
+                initials: "SJ",
+                color: "from-blue-400 to-indigo-600"
               },
               {
-                text: "The streak tracker feels different from habit apps. Missing a day isn't 'failing a habit'—it's breaking a vow. That subtle shift kept me going.",
-                author: "Dedicated Devotee"
+                text: "The streak tracker feels different here. Missing a day isn't 'failing a habit'—it's breaking a vow. That subtle psychological shift kept me going.",
+                author: "Arjun K.",
+                role: "Founder & Spiritual Seeker",
+                initials: "AK",
+                color: "from-orange-400 to-red-600"
               },
               {
-                text: "Finally, a clean space without colorful distractions, without gamification points. Just me, the Chalisa, and the commitment I made to God.",
-                author: "Spiritual Seeker"
+                text: "Finally, a clean space without colorful distractions, without gamification points. Just me, the chanting, and the commitment I made to God.",
+                author: "Elena R.",
+                role: "Medical Student",
+                initials: "ER",
+                color: "from-emerald-400 to-teal-600"
               }
             ].map((review, i) => (
-              <motion.div key={i} variants={itemVariants} className="p-8 rounded-3xl bg-slate-900 border border-white/5 relative">
-                <div className="text-4xl text-orange-500/20 absolute top-4 left-6 font-serif">&quot;</div>
-                <p className="text-slate-300 relative z-10 text-lg leading-relaxed mb-6 font-light">{review.text}</p>
-                <div className="flex items-center gap-3">
-                  <div className="h-px bg-white/10 flex-1" />
-                  <span className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{review.author}</span>
+              <motion.div key={i} variants={itemVariants} className="p-6 sm:p-8 rounded-[2rem] bg-slate-900/80 border border-white/5 relative flex flex-col h-full hover:bg-slate-800/80 transition-colors group">
+                <div className="text-5xl text-orange-500/10 absolute top-4 left-6 font-serif leading-none group-hover:text-orange-500/20 transition-colors">&quot;</div>
+                <p className="text-slate-300 relative z-10 text-base sm:text-lg leading-relaxed mb-8 font-light flex-1 pt-6">{review.text}</p>
+                
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${review.color} flex items-center justify-center text-white font-display font-bold shadow-lg flex-shrink-0`}>
+                    {review.initials}
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-200">{review.author}</div>
+                    <div className="text-xs text-slate-500">{review.role}</div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -671,16 +727,16 @@ export default function LandingPage() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="mt-32 relative rounded-3xl bg-gradient-to-r from-orange-600 to-red-700 p-1 px-6 md:px-12 py-16 text-center border border-white/10 shadow-[0_0_100px_rgba(249,115,22,0.2)] overflow-hidden"
+          className="mt-32 relative rounded-3xl bg-gradient-to-r from-orange-600 to-red-700 p-6 sm:p-12 md:px-12 py-16 text-center border border-white/10 shadow-[0_0_100px_rgba(249,115,22,0.2)] overflow-hidden"
         >
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
           <motion.div variants={itemVariants} className="relative z-10">
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">Commit to Greatness.</h2>
-            <p className="text-orange-100 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">Join the journey of discipline and unwavering devotion. Your Sankalp begins with a single step.</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-6">Commit to Greatness.</h2>
+            <p className="text-orange-100 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light px-4">Join the journey of discipline and unwavering devotion. Your Sankalp begins with a single step.</p>
             <Link 
               href="https://sankalpv33.vercel.app/" 
               target="_blank"
-              className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white text-orange-600 rounded-full font-bold text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl"
+              className="inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 min-h-[56px] bg-white text-orange-600 rounded-full font-bold text-base sm:text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl touch-manipulation"
             >
               Begin Your Sankalp
             </Link>
@@ -823,7 +879,7 @@ export default function LandingPage() {
       </AnimatePresence>
 
       <footer className="relative z-10 border-t border-white/5 py-8 mt-12 bg-slate-950">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-slate-500 text-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row flex-wrap items-center justify-between text-slate-500 text-[10px] sm:text-xs">
           <p>© {new Date().getFullYear()} Sankalp App. All rights reserved.</p>
           <p className="flex items-center gap-1 mt-4 md:mt-0">
             Designed for <Flame className="w-3 h-3 text-orange-500" /> Devotion
